@@ -12,16 +12,16 @@ class Routes {
   static List<GetPage> pages = [
     GetPage(
         name: Path.home,
-        page: ()=>HomePage(),
+        page: ()=>const HomePage(),
         middlewares: [
           RouterAuthMiddleware(priority: 0)
         ]
     ),
-    GetPage(name: Path.message, page: ()=>MessagePage()),
-    GetPage(name: Path.addressBook, page: ()=>AddressBookPage()),
-    GetPage(name: Path.find, page: ()=>FindPage()),
-    GetPage(name: Path.me, page: ()=>MePage()),
-    GetPage(name: Path.login, page: ()=>LoginPage())
+    GetPage(name: Path.message, page: ()=>const MessagePage()),
+    GetPage(name: Path.addressBook, page: ()=>const AddressBookPage()),
+    GetPage(name: Path.find, page: ()=>const FindPage()),
+    GetPage(name: Path.me, page: ()=>const MePage()),
+    GetPage(name: Path.login, page: ()=>const LoginPage())
   ];
 }
 class Path {
