@@ -15,10 +15,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var currentIndex = 0;
   List<Widget> pages = [
-    MessagePage(),
-    AddressBookPage(),
-    FindPage(),
-    MePage()
+    const MessagePage(),
+    const AddressBookPage(),
+    const FindPage(),
+    const MePage()
   ];
 
   @override
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
           body: pages[currentIndex],
           bottomNavigationBar: ConvexAppBar(
             style: TabStyle.flip,
-            items: [
+            items: const [
               TabItem(icon: Icons.message, title: '消息'),
               TabItem(icon: Icons.people, title: '通讯录'),
               TabItem(icon: Icons.compass_calibration_outlined, title: '发现'),

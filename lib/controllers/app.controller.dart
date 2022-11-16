@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:misty_chat/utils/router.util.dart';
+import 'package:misty_chat/utils/store.util.dart';
+import 'package:misty_chat/utils/store_key.dart';
 
 class AppController extends GetxController{
   RxString token = "".obs;
@@ -11,6 +13,7 @@ class AppController extends GetxController{
     ever(token, (newToken){
       debugPrint("新token:$newToken");
       if(newToken == ""){
+        StoreUtil.save(StoreKey.token, null);
         RouterUtil.redirectLogin();
       }
     });

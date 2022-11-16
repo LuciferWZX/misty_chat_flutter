@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:misty_chat/controllers/app.controller.dart';
+import 'package:misty_chat/pages/message/search_input.dart';
+import 'package:misty_chat/utils/color.util.dart';
+
+import '../../widgets/list_item/index.dart';
 
 class MessagePage extends StatefulWidget {
   const MessagePage({Key? key}) : super(key: key);
@@ -10,23 +14,32 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
-  final appController = Get.find<AppController>();
+  final appController = Get.put<AppController>(AppController());
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-        title: Obx(()=>Text("消息:${appController.token}")),
+        backgroundColor: ColorsUtil.hexStringColor("#FCFCFF"),
+        title: const SearchInput(),
+        elevation: 0,
       ),
-      body: Center(
-        child: TextButton(
-          onPressed: () {
-            appController.setToken("");
-          },
-          child: Text("清除token"),
-        ),
-      ),
+      backgroundColor: ColorsUtil.hexStringColor("#FCFCFF"),
+      body: ListView(
+        children: const [
+          ListItem(),
+          ListItem(),
+          ListItem(),
+          ListItem(),
+          ListItem(),
+          ListItem(),
+          ListItem(),
+          ListItem(),
+          ListItem(),
+          SizedBox(height: 10)
+        ],
+      )
     );
   }
 }
