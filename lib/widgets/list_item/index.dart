@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:getwidget/components/avatar/gf_avatar.dart';
-import 'package:getwidget/components/badge/gf_badge.dart';
 
 import '../../utils/color.util.dart';
 
 class ListItem extends StatefulWidget {
-  const ListItem({Key? key}) : super(key: key);
+  final bool slidable;
+  final String imgSrc;
+  final String title;
+  final String desc;
+  final Widget? action;
+  const ListItem({
+    Key? key ,
+    this.slidable = false,
+    this.title = "",
+    this.desc = "",
+    this.action,
+    required this.imgSrc
+  }) : super(key: key);
 
   @override
   State<ListItem> createState() => _ListItemState();
@@ -15,31 +26,35 @@ class ListItem extends StatefulWidget {
 class _ListItemState extends State<ListItem> {
   @override
   Widget build(BuildContext context) {
-    return buildSlidable(
-      child: Container(
-        padding: const EdgeInsets.only(left: 16,top: 14,right: 16,bottom: 14),
-        child: Flex(
-          direction: Axis.horizontal,
-          children:  [
-            const GFAvatar(
-                size: 56,
-                backgroundImage:NetworkImage("https://img2.baidu.com/it/u=3650686799,1942032122&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1668790800&t=2c279653d74e825ccda477205f73f7d7")
-            ),
-            const SizedBox(width: 16),
-            buildInfo(),
-            const SizedBox(width: 16),
-            buildDetail()
-          ],
-        ),
-      )
+    if(widget.slidable){
+      return buildSlidable();
+    }
+    return buildListItem();
+  }
+  Widget buildListItem(){
+    return Container(
+      padding: const EdgeInsets.only(left: 16,top: 14,right: 16,bottom: 14),
+      child: Flex(
+        direction: Axis.horizontal,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children:  [
+          GFAvatar(
+              size: 37,
+              backgroundImage:NetworkImage(widget.imgSrc)
+          ),
+          const SizedBox(width: 16),
+          buildInfo(),
+          const SizedBox(width: 16),
+          widget.action!=null?buildAction():buildDetail()
+        ],
+      ),
     );
   }
-  Widget buildSlidable({required Widget child}){
+
+  Widget buildSlidable(){
     return Slidable(
-
-        key: const ValueKey(1),
-        child: child,
-
+      key: const ValueKey(1),
+      child: buildListItem(),
       startActionPane: ActionPane(
         motion:  const DrawerMotion(),
         // A pane can dismiss the Slidable.
@@ -101,22 +116,30 @@ class _ListItemState extends State<ListItem> {
   Widget buildInfo(){
     return(
       Expanded(
-        child: Flex(
-          direction: Axis.vertical,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Bryan",style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              color: ColorsUtil.hexStringColor("#001E2F"),
-            ),),
-            Text("what do you think?what do you think?what do you think?what do you think?",style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              overflow: TextOverflow.ellipsis,
-              color: ColorsUtil.hexStringColor("#74777F"),
-            )),
-          ],
+        child: Container(
+          constraints: const BoxConstraints(
+            minHeight: 56
+          ),
+          child: Flex(
+            direction: Axis.vertical,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(widget.title,style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: ColorsUtil.hexStringColor("#001E2F"),
+                  height: 1.5
+              ),),
+              Text(widget.desc,style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  overflow: TextOverflow.ellipsis,
+                  color: ColorsUtil.hexStringColor("#74777F"),
+                  height: 1.5
+              )),
+            ],
+          ),
         ),
       )
     );
@@ -156,5 +179,8 @@ class _ListItemState extends State<ListItem> {
         ],
       )
     );
+  }
+  Widget buildAction(){
+    return widget.action as Widget;
   }
 }

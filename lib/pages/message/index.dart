@@ -19,7 +19,9 @@ class _MessagePageState extends State<MessagePage> {
 
   @override
   Widget build(BuildContext context) {
-
+    String src = "https://img2.baidu.com/it/u=3650686799,1942032122&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1668790800&t=2c279653d74e825ccda477205f73f7d7";
+    String title="leon";
+    String desc ="what do you think?what do you think?what do you think?what do you think?";
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorsUtil.hexStringColor("#FCFCFF"),
@@ -29,17 +31,17 @@ class _MessagePageState extends State<MessagePage> {
       backgroundColor: ColorsUtil.hexStringColor("#FCFCFF"),
       body:SlidableAutoCloseBehavior(
         child:  ListView(
-          children: const [
-            ListItem(),
-            ListItem(),
-            ListItem(),
-            ListItem(),
-            ListItem(),
-            ListItem(),
-            ListItem(),
-            ListItem(),
-            ListItem(),
-            SizedBox(height: 10)
+          children: [
+            ListItem(imgSrc: src,title: title,desc: desc,),
+            ListItem(imgSrc: src,title: title,desc: desc),
+            ListItem(imgSrc: src,title: title,desc: desc),
+            ListItem(imgSrc: src,title: title,desc: desc),
+            ListItem(imgSrc: src,title: title,desc: desc),
+            ListItem(imgSrc: src,title: title,desc: desc),
+            ListItem(imgSrc: src,title: title,desc: desc),
+            ListItem(imgSrc: src,title: title,desc: desc),
+            ListItem(imgSrc: src,title: title,desc: desc),
+            const SizedBox(height: 10)
           ],
         ),
       )
