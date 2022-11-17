@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       initialRoute: Routes.initialRoute,
       getPages: Routes.pages,
-      initialBinding: AppControllerBinding(),
+      initialBinding: AppControllerBinding()
     );
   }
 }
