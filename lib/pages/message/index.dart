@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:misty_chat/controllers/app.controller.dart';
 import 'package:misty_chat/pages/message/search_input.dart';
@@ -26,19 +27,21 @@ class _MessagePageState extends State<MessagePage> {
         elevation: 0,
       ),
       backgroundColor: ColorsUtil.hexStringColor("#FCFCFF"),
-      body: ListView(
-        children: const [
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          ListItem(),
-          SizedBox(height: 10)
-        ],
+      body:SlidableAutoCloseBehavior(
+        child:  ListView(
+          children: const [
+            ListItem(),
+            ListItem(),
+            ListItem(),
+            ListItem(),
+            ListItem(),
+            ListItem(),
+            ListItem(),
+            ListItem(),
+            ListItem(),
+            SizedBox(height: 10)
+          ],
+        ),
       )
     );
   }
