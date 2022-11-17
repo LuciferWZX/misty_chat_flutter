@@ -16,10 +16,16 @@ class VerifyPinput extends StatefulWidget {
 class _VerifyPinputState extends State<VerifyPinput> {
   final pinController = TextEditingController();
   final focusNode = FocusNode();
+
+
+  @override
+  void initState() {
+    focusNode.requestFocus();
+    super.initState();
+  }
   @override
   void dispose(){
     pinController.dispose();
-    focusNode.requestFocus();
     super.dispose();
   }
 
