@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getwidget/components/button/gf_button.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:misty_chat/utils/color.util.dart';
 import 'package:misty_chat/widgets/list_item/index.dart';
@@ -8,6 +8,7 @@ import 'package:misty_chat/widgets/rflutter_alert/src/alert_style.dart';
 import 'package:misty_chat/widgets/rflutter_alert/src/constants.dart';
 import 'package:misty_chat/widgets/rflutter_alert/src/dialog_button.dart';
 
+import '../../controllers/app.controller.dart';
 import '../../widgets/normal_list_item/index.dart';
 
 class MePage extends StatefulWidget {
@@ -18,6 +19,7 @@ class MePage extends StatefulWidget {
 }
 
 class _MePageState extends State<MePage> {
+  final appController = Get.put<AppController>(AppController());
   @override
   Widget build(BuildContext context) {
     Color iconColor = ColorsUtil.hexStringColor("#1B72C0");
@@ -166,7 +168,10 @@ class _MePageState extends State<MePage> {
                     ),
                   ),
                   DialogButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: (){
+                      Navigator.pop(context);
+                      Future.delayed(Duration(seconds: 1),()=>appController.setToken(""));
+                    },
                     color: Colors.transparent,
                     child: const Text(
                       "退出登录",
