@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 100,
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10,left: 10,bottom: 10),
+              padding: const EdgeInsets.only(left: 10,bottom: 10,right:10 ),
               child: buildForm(),
             )
           ],
@@ -68,7 +68,11 @@ class _LoginPageState extends State<LoginPage> {
             child: Flex(direction: Axis.horizontal,
               children: [
                 TextButton(
-            onPressed: (){},
+            onPressed: (){
+              setState(() {
+                step = 1;
+              });
+            },
             child: Text(_phoneController.text,)
         )
               ],

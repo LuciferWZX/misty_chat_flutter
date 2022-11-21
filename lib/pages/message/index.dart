@@ -15,7 +15,7 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
-  final appController = Get.put<AppController>(AppController());
+  final appController = Get.find<AppController>();
 
   @override
   Widget build(BuildContext context) {

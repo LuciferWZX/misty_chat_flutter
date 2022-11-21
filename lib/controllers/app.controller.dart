@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:misty_chat/routes/index.dart';
+import 'package:misty_chat/utils/loading.util.dart';
 import 'package:misty_chat/utils/router.util.dart';
 import 'package:misty_chat/utils/store.util.dart';
 import 'package:misty_chat/utils/store_key.dart';
@@ -14,7 +16,9 @@ class AppController extends GetxController{
       debugPrint("新token:$newToken");
       if(newToken == ""){
         StoreUtil.save(StoreKey.token, null);
-        RouterUtil.redirectLogin();
+        LoadingUtil.closeLoading();
+        RouterUtil.redirectPath(path:RoutePath.login);
+
       }
     });
     super.onInit();
