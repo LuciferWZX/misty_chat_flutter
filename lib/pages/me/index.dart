@@ -3,6 +3,10 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:misty_chat/utils/color.util.dart';
 import 'package:misty_chat/widgets/list_item/index.dart';
+import 'package:misty_chat/widgets/rflutter_alert/src/alert.dart';
+import 'package:misty_chat/widgets/rflutter_alert/src/alert_style.dart';
+import 'package:misty_chat/widgets/rflutter_alert/src/constants.dart';
+import 'package:misty_chat/widgets/rflutter_alert/src/dialog_button.dart';
 
 import '../../widgets/normal_list_item/index.dart';
 
@@ -20,7 +24,7 @@ class _MePageState extends State<MePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         actions: [
           IconButton(
               onPressed: (){},
@@ -49,23 +53,28 @@ class _MePageState extends State<MePage> {
                   onTap: (){},
                   prefix: Icon(Icons.notifications_none_rounded,color: iconColor),
                   title: "通知",
-                ), NormalListItem(
+                ),
+                NormalListItem(
                   onTap: (){},
                   prefix: Icon(Icons.dark_mode_outlined,color: iconColor),
                   title: "外观",
-                ), NormalListItem(
+                ),
+                NormalListItem(
                   onTap: (){},
                   prefix: Icon(Icons.lock_outline_rounded,color: iconColor),
                   title: "隐私",
-                ),NormalListItem(
+                ),
+                NormalListItem(
                   onTap: (){},
                   prefix: Icon(Icons.cloud_queue_rounded,color: iconColor),
                   title: "数据和存储",
-                ),NormalListItem(
+                ),
+                NormalListItem(
                   onTap: (){},
                   prefix: Icon(Icons.help_outline_rounded,color: iconColor),
                   title: "关于",
-                )
+                ),
+                buildLogoutBtn()
               ],
             )
           )
@@ -107,7 +116,6 @@ class _MePageState extends State<MePage> {
         )
     );
   }
-
   Widget buildSubtitle(){
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
@@ -119,6 +127,73 @@ class _MePageState extends State<MePage> {
           fontSize: 14
         )
       ),
+    );
+  }
+  Widget buildLogoutBtn(){
+    return(
+        Padding(
+          padding: const EdgeInsets.only(left: 10,right: 10),
+          child: GFButton(
+            onPressed: ()async{
+              await Alert(
+                context: context,
+                title: "退出登录？",
+                image: Icon(Icons.logout,color: ColorsUtil.hexStringColor("#1B72C0")),
+                desc: "退出后不会删除任何历史数据，下次登录依然可以使用本账号。",
+                style: AlertStyle(
+                    animationType: AnimationType.fromBottom,
+                  descStyle: TextStyle(
+                    color: ColorsUtil.hexStringColor("#44474E"),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400
+                  ),
+                  titleStyle: TextStyle(
+                    color: ColorsUtil.hexStringColor("#1C1B1F"),
+                    fontSize: 24,
+                    fontWeight: FontWeight.w400
+                  )
+                ),
+                buttons: [
+                  DialogButton(
+                    onPressed: () => Navigator.pop(context),
+                    color: Colors.transparent,
+                    child: Text(
+                      "取消",
+                      style: TextStyle(
+                          color: ColorsUtil.hexStringColor("#1B72C0"),
+                          fontSize: 14
+                      ),
+                    ),
+                  ),
+                  DialogButton(
+                    onPressed: () => Navigator.pop(context),
+                    color: Colors.transparent,
+                    child: const Text(
+                      "退出登录",
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14
+                      ),
+                    ),
+                  )
+                ],
+              ).show();
+              // CoolAlert.show(
+              //   context: context,
+              //   title: "你确定要退出吗？",
+              //   type: CoolAlertType.confirm,
+              //   text: '退出后不会删除任何历史数据，下次登录依然可以使用本账号。',
+              //   confirmBtnText: '退出登录',
+              //   cancelBtnText: '取消',
+              //   confirmBtnColor: Colors.red,
+              // );
+            },
+            text: "退出登录",
+            color: GFColors.DANGER,
+            type: GFButtonType.solid,
+          ),
+        )
     );
   }
 }
