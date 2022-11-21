@@ -1,3 +1,5 @@
+import 'package:cool_alert/cool_alert.dart';
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/components/button/gf_button.dart';
@@ -139,54 +141,6 @@ class _MePageState extends State<MePage> {
           padding: const EdgeInsets.only(left: 10,right: 10),
           child: GFButton(
             onPressed: ()async{
-              await Alert(
-                context: context,
-                title: "退出登录？",
-                image: Icon(Icons.logout,color: ColorsUtil.hexStringColor("#1B72C0")),
-                desc: "退出后不会删除任何历史数据，下次登录依然可以使用本账号。",
-                style: AlertStyle(
-                    animationType: AnimationType.fromBottom,
-                  descStyle: TextStyle(
-                    color: ColorsUtil.hexStringColor("#44474E"),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400
-                  ),
-                  titleStyle: TextStyle(
-                    color: ColorsUtil.hexStringColor("#1C1B1F"),
-                    fontSize: 24,
-                    fontWeight: FontWeight.w400
-                  )
-                ),
-                buttons: [
-                  DialogButton(
-                    onPressed: () => Navigator.pop(context),
-                    color: Colors.transparent,
-                    child: Text(
-                      "取消",
-                      style: TextStyle(
-                          color: ColorsUtil.hexStringColor("#1B72C0"),
-                          fontSize: 14
-                      ),
-                    ),
-                  ),
-                  DialogButton(
-                    onPressed: () async{
-                      Navigator.pop(context);
-                      await LoadingUtil.showLoading();
-                      appController.setToken("");
-                    },
-                    color: Colors.transparent,
-                    child: const Text(
-                      "退出登录",
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14
-                      ),
-                    ),
-                  )
-                ],
-              ).show();
               // CoolAlert.show(
               //   context: context,
               //   title: "你确定要退出吗？",
@@ -194,8 +148,14 @@ class _MePageState extends State<MePage> {
               //   text: '退出后不会删除任何历史数据，下次登录依然可以使用本账号。',
               //   confirmBtnText: '退出登录',
               //   cancelBtnText: '取消',
+              //   onConfirmBtnTap: ()async{
+              //       Navigator.pop(context);
+              //       await LoadingUtil.showLoading();
+              //       appController.setToken("");
+              //   },
               //   confirmBtnColor: Colors.red,
               // );
+              _showDialogFlash();
             },
             text: "退出登录",
             color: GFColors.DANGER,
@@ -203,5 +163,28 @@ class _MePageState extends State<MePage> {
           ),
         )
     );
+  }
+  void _showDialogFlash({bool persistent = true}) {
+    context.showFlashDialog(
+        constraints: BoxConstraints(maxWidth: 300),
+        persistent: persistent,
+        title: Text('Flash Dialog'),
+        content: Text(
+            '⚡️A highly customizable, powerful and easy-to-use alerting library for Flutter.'),
+        negativeActionBuilder: (context, controller, _) {
+          return TextButton(
+            onPressed: () {
+              controller.dismiss();
+            },
+            child: Text('NO'),
+          );
+        },
+        positiveActionBuilder: (context, controller, _) {
+          return TextButton(
+              onPressed: () {
+                controller.dismiss();
+              },
+              child: Text('YES'));
+        });
   }
 }
