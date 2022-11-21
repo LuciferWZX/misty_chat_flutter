@@ -11,7 +11,7 @@ class StoreUtil {
     _instance;
     return _instance;
   }
-  static void save(String storeKey,dynamic value) async{
+  static Future<void> save(String storeKey,dynamic value) async{
     GetStorage storage = GetStorage();
     await storage.write(storeKey,value);
   }

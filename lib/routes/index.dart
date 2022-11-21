@@ -8,23 +8,23 @@ import 'package:misty_chat/pages/me/index.dart';
 import 'package:misty_chat/pages/message/index.dart';
 
 class Routes {
-  static const String initialRoute = Path.home;
+  static const String initialRoute = RoutePath.home;
   static List<GetPage> pages = [
     GetPage(
-        name: Path.home,
+        name: RoutePath.home,
         page: ()=>const HomePage(),
         middlewares: [
           RouterAuthMiddleware(priority: 0)
         ]
     ),
-    GetPage(name: Path.message, page: ()=>const MessagePage()),
-    GetPage(name: Path.addressBook, page: ()=>const AddressBookPage()),
-    GetPage(name: Path.find, page: ()=>const FindPage()),
-    GetPage(name: Path.me, page: ()=>const MePage()),
-    GetPage(name: Path.login, page: ()=>const LoginPage())
+    GetPage(name: RoutePath.message, page: ()=>const MessagePage()),
+    GetPage(name: RoutePath.addressBook, page: ()=>const AddressBookPage()),
+    GetPage(name: RoutePath.find, page: ()=>const FindPage()),
+    GetPage(name: RoutePath.me, page: ()=>const MePage()),
+    GetPage(name: RoutePath.login, page: ()=>const LoginPage())
   ];
 }
-class Path {
+class RoutePath {
   static const String home = "/home";//消息
   static const String message = "/message";//消息
   static const String addressBook = "/address_book";//首页
