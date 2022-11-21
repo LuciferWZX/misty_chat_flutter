@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:getwidget/types/gf_button_type.dart';
 import 'package:misty_chat/utils/color.util.dart';
 import 'package:misty_chat/widgets/list_item/index.dart';
 
