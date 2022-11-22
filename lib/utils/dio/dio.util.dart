@@ -17,6 +17,7 @@ class DioUtil{
   Dio get dio =>_dio;
   DioUtil._internal(){
     _instance = this;
+
     _instance!._init();
   }
   factory DioUtil()=>_instance??DioUtil._internal();
@@ -29,9 +30,16 @@ class DioUtil{
   /// cookie
   CookieJar cookieJar = CookieJar();
   _init(){
+    ///初始化基本信息
+    BaseOptions options = BaseOptions(
+        baseUrl: RequestConfig.baseURL,
+        connectTimeout: RequestConfig.connectTimeout,
+        receiveTimeout: RequestConfig.receiveTimeout
+    );
+    ///初始化dio
+    _dio = Dio(options);
     /// 添加拦截器
     _dio.interceptors.add(DioInterceptors());
-
     /// 添加转换器
     _dio.transformer = DioTransformer();
 
@@ -43,14 +51,7 @@ class DioUtil{
 
     /// 添加缓存拦截器
     _dio.interceptors.add(DioCacheInterceptors());
-    ///初始化基本信息
-    BaseOptions options = BaseOptions(
-      baseUrl: RequestConfig.baseURL,
-      connectTimeout: RequestConfig.connectTimeout,
-      receiveTimeout: RequestConfig.receiveTimeout
-    );
-    ///初始化dio
-    _dio = Dio(options);
+
   }
   /// 设置Http代理(设置即开启)
   void setProxy({String? proxyAddress,bool enable = false}){
@@ -100,8 +101,6 @@ class DioUtil{
       DioMethod.patch: 'patch',
       DioMethod.head: 'head'
     };
-
-
     options ??= Options(method: methodValues[method]);
     try {
       Response response;
@@ -113,9 +112,10 @@ class DioUtil{
           onSendProgress: onSendProgress,
           onReceiveProgress: onReceiveProgress
       );
+
       return response.data;
     } on DioError catch (e) {
-      throw e;
+      rethrow;
     }
   }
 

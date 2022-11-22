@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:misty_chat/utils/device.util.dart';
 
 import 'dio_response.dart';
 
 class DioInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-
     // 对非open的接口的请求参数全部增加userId
     if (!options.path.contains("open")) {
       options.queryParameters["userId"] = "xxx";
@@ -13,17 +13,16 @@ class DioInterceptors extends Interceptor {
 
     // 头部添加token
     options.headers["token"] = "xxx";
+    String device =DeviceUtil.getDevicePlatform();
+    options.headers["user-agent"] = device;
 
     // 更多业务需求
 
     handler.next(options);
-
-    // super.onRequest(options, handler);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
-
     // 请求成功是对数据做基本处理
     if (response.statusCode == 200) {
       response.data = DioResponse(code: 0, message: "请求成功啦", data: response.data);
@@ -43,7 +42,7 @@ class DioInterceptors extends Interceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  Future<dynamic> onError(DioError err, ErrorInterceptorHandler handler)async {
     switch(err.type) {
     // 连接服务器超时
       case DioErrorType.connectTimeout:
@@ -72,6 +71,12 @@ class DioInterceptors extends Interceptor {
     // 404/503错误
       case DioErrorType.response:
         {
+          final response = err.response;
+          if(response != null){
+            response.data = DioResponse(code: 1, message: "请求失败啦", data: response.data);
+            handler.resolve(response);
+          }
+
           // 根据自己的业务需求来设定该如何操作,可以是弹出框提示/或者做一些路由跳转处理
         }
         break;
@@ -83,6 +88,6 @@ class DioInterceptors extends Interceptor {
         break;
 
     }
-    super.onError(err, handler);
+    // super.onError(err, handler);
   }
 }

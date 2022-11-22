@@ -4,6 +4,7 @@ class DioTransformer extends DefaultTransformer {
 
   @override
   Future<String> transformRequest(RequestOptions options) async {
+
     // 如果请求的数据接口是List<String>那我们直接抛出异常
     if (options.data is List<String>) {
       throw DioError(

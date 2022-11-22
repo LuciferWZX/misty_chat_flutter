@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:misty_chat/routes/index.dart';
+import 'package:misty_chat/services/api.service.dart';
 import 'package:misty_chat/utils/loading.util.dart';
 import 'package:misty_chat/utils/router.util.dart';
 import 'package:misty_chat/utils/store.util.dart';
@@ -56,12 +58,14 @@ class _VerifyPinputState extends State<VerifyPinput> {
         defaultPinTheme: defaultPinTheme,
         hapticFeedbackType: HapticFeedbackType.lightImpact,
         onCompleted: (pin)async {
-          debugPrint('onCompleted: $pin');
-          await LoadingUtil.showLoading(title: "登录中...");
-          await StoreUtil.save(StoreKey.token,"this is token");
-          await Future.delayed(Duration(seconds: 2));
-          await  LoadingUtil.closeLoading();
-          await RouterUtil.redirectPath(path: RoutePath.home);
+          var response= await Get.find<APIService>().getAppController();
+          response.loginByPhone(phone: widget.phoneNumber,pin: pin);
+          // debugPrint('onCompleted: $pin');
+          // await LoadingUtil.showLoading(title: "登录中...");
+          // await StoreUtil.save(StoreKey.token,"this is token");
+          // await Future.delayed(Duration(seconds: 2));
+          // await  LoadingUtil.closeLoading();
+          // await RouterUtil.redirectPath(path: RoutePath.home);
         },
         onChanged: (value) {
           debugPrint('onChanged: $value');
