@@ -1,17 +1,12 @@
-import 'package:cool_alert/cool_alert.dart';
+
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:misty_chat/controllers/app.controller.dart';
 import 'package:misty_chat/utils/color.util.dart';
 import 'package:misty_chat/utils/loading.util.dart';
 import 'package:misty_chat/widgets/list_item/index.dart';
-import 'package:misty_chat/widgets/rflutter_alert/src/alert.dart';
-import 'package:misty_chat/widgets/rflutter_alert/src/alert_style.dart';
-import 'package:misty_chat/widgets/rflutter_alert/src/constants.dart';
-import 'package:misty_chat/widgets/rflutter_alert/src/dialog_button.dart';
 
 import '../../widgets/normal_list_item/index.dart';
 
@@ -80,6 +75,7 @@ class _MePageState extends State<MePage> {
                   prefix: Icon(Icons.help_outline_rounded,color: iconColor),
                   title: "关于",
                 ),
+                const SizedBox(height: 100),
                 buildLogoutBtn()
               ],
             )
@@ -139,7 +135,18 @@ class _MePageState extends State<MePage> {
     return(
         Padding(
           padding: const EdgeInsets.only(left: 10,right: 10),
-          child: GFButton(
+          child: ElevatedButton(
+            style: ButtonStyle(
+              //背景颜色
+                backgroundColor: MaterialStateProperty.resolveWith((states) {
+                  //设置按下时的背景颜色
+                  // if (states.contains(MaterialState.pressed)) {
+                  //   return Colors.blue[200];
+                  // }
+                  //默认不使用背景颜色
+                  return Colors.red;
+                })
+            ),
             onPressed: ()async{
               // CoolAlert.show(
               //   context: context,
@@ -157,34 +164,34 @@ class _MePageState extends State<MePage> {
               // );
               _showDialogFlash();
             },
-            text: "退出登录",
-            color: GFColors.DANGER,
-            type: GFButtonType.solid,
+            child: const Text("退出登录"),
           ),
         )
     );
   }
   void _showDialogFlash({bool persistent = true}) {
     context.showFlashDialog(
-        constraints: BoxConstraints(maxWidth: 300),
+        constraints: const BoxConstraints(maxWidth: 300),
         persistent: persistent,
-        title: Text('Flash Dialog'),
-        content: Text(
-            '⚡️A highly customizable, powerful and easy-to-use alerting library for Flutter.'),
+        transitionDuration: const Duration(seconds: 1),
+        title: const Text('你确定要退出吗?'),
+        content: const Text('退出后不会删除任何历史数据，下次登录依然可以使用本账号。'),
         negativeActionBuilder: (context, controller, _) {
           return TextButton(
-            onPressed: () {
+            onPressed: (){
               controller.dismiss();
             },
-            child: Text('NO'),
+            child: const Text('取消'),
           );
         },
         positiveActionBuilder: (context, controller, _) {
           return TextButton(
-              onPressed: () {
+              onPressed: () async{
                 controller.dismiss();
+                await LoadingUtil.showLoading();
+                appController.setToken("");
               },
-              child: Text('YES'));
+              child: const Text('退出登录',style: TextStyle(color: Colors.red),));
         });
   }
 }

@@ -32,15 +32,15 @@ class _MessagePageState extends State<MessagePage> {
       body:SlidableAutoCloseBehavior(
         child:  ListView(
           children: [
-            ListItem(imgSrc: src,title: title,desc: desc,),
-            ListItem(imgSrc: src,title: title,desc: desc),
-            ListItem(imgSrc: src,title: title,desc: desc),
-            ListItem(imgSrc: src,title: title,desc: desc),
-            ListItem(imgSrc: src,title: title,desc: desc),
-            ListItem(imgSrc: src,title: title,desc: desc),
-            ListItem(imgSrc: src,title: title,desc: desc),
-            ListItem(imgSrc: src,title: title,desc: desc),
-            ListItem(imgSrc: src,title: title,desc: desc),
+            ListItem(imgSrc: src,title: title,desc: desc,slidable: true,),
+            ListItem(imgSrc: src,title: title,desc: desc,slidable: true),
+            ListItem(imgSrc: src,title: title,desc: desc,slidable: true),
+            ListItem(imgSrc: src,title: title,desc: desc,slidable: true),
+            ListItem(imgSrc: src,title: title,desc: desc,slidable: true),
+            ListItem(imgSrc: src,title: title,desc: desc,slidable: true),
+            ListItem(imgSrc: src,title: title,desc: desc,slidable: true),
+            ListItem(imgSrc: src,title: title,desc: desc,slidable: true),
+            ListItem(imgSrc: src,title: title,desc: desc,slidable: true),
             const SizedBox(height: 10)
           ],
         ),

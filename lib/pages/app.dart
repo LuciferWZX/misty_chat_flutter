@@ -1,3 +1,4 @@
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,22 @@ class MyApp extends StatelessWidget {
       initialRoute: Routes.initialRoute,
       getPages: Routes.pages,
       initialBinding: AppControllerBinding(),
-      builder: EasyLoading.init(),
+      builder: (context,_){
+        final theme = Theme.of(context);
+        final isThemeDark = theme.brightness == Brightness.dark;
+        var child = _!;
+        child = FlutterEasyLoading(
+          child: child,
+        );
+        child = FlashTheme(
+          flashBarTheme: isThemeDark
+              ? const FlashBarThemeData.dark()
+              : const FlashBarThemeData.light(),
+          flashDialogTheme: const FlashDialogThemeData(),
+          child: child,
+        );
+        return child;
+      },
     );
   }
 }

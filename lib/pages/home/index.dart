@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     const MessagePage(),
     const AddressBookPage(),
     const FindPage(),
-    const MePage()
+    MePage()
   ];
 
   @override

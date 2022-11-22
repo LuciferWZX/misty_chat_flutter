@@ -20,7 +20,7 @@ class Routes {
     GetPage(name: RoutePath.message, page: ()=>const MessagePage()),
     GetPage(name: RoutePath.addressBook, page: ()=>const AddressBookPage()),
     GetPage(name: RoutePath.find, page: ()=>const FindPage()),
-    GetPage(name: RoutePath.me, page: ()=>const MePage()),
+    GetPage(name: RoutePath.me, page: ()=>MePage()),
     GetPage(name: RoutePath.login, page: ()=>const LoginPage())
   ];
 }

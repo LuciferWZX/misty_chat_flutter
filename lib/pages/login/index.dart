@@ -1,5 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:misty_chat/pages/login/pinput.dart';
+
+import '../../widgets/animated_wave/animated_background.dart';
+import '../../widgets/animated_wave/index.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -22,25 +27,51 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Flex(
-          direction: Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:[
-            buildTitle(),
-            const SizedBox(
-              height: 100,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10,bottom: 10,right:10 ),
-              child: buildForm(),
-            )
-          ],
-        ),
+      body: Stack(
+        children: <Widget>[
+          Positioned.fill(child: AnimatedBackground()),
+          onBottom(const AnimatedWave(
+            height: 180,
+            speed: 1.0,
+          )),
+          onBottom(const AnimatedWave(
+            height: 120,
+            speed: 0.9,
+            offset: pi,
+          )),
+          onBottom(const AnimatedWave(
+            height: 220,
+            speed: 1.2,
+            offset: pi / 2,
+          )),
+          Positioned.fill(
+              child:Center(
+                child: Flex(
+                  direction: Axis.vertical,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:[
+                    buildTitle(),
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10,bottom: 10,right:10 ),
+                      child: buildForm(),
+                    )
+                  ],
+                ),
+              )
+          ),
+        ],
       ),
     );
   }
-
+  onBottom(Widget child) => Positioned.fill(
+    child: Align(
+      alignment: Alignment.bottomCenter,
+      child: child,
+    ),
+  );
   Widget buildTitle(){
     Widget baseTitle = Container(
       alignment: Alignment.center,
