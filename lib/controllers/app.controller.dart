@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:misty_chat/entities/user.dart';
 import 'package:misty_chat/routes/index.dart';
 import 'package:misty_chat/utils/alert.util.dart';
 import 'package:misty_chat/utils/dio/dio.method.dart';
@@ -12,7 +13,7 @@ import 'package:misty_chat/utils/store_key.dart';
 
 class AppController extends GetxController{
   RxString token = "".obs;
-
+  Rx<User> user = User().obs;
   @override
   void onInit(){
     /// 监听token的改变
@@ -20,15 +21,25 @@ class AppController extends GetxController{
       debugPrint("新token:$newToken");
       if(newToken == ""){
         StoreUtil.save(StoreKey.token, null);
+        StoreUtil.save(StoreKey.currentUserId, null);
         LoadingUtil.closeLoading();
         RouterUtil.redirectPath(path:RoutePath.login);
-
+      }else{
+        StoreUtil.save(StoreKey.token, newToken);
       }
+    });
+    ever(user, (User newUser)async{
+
+      await StoreUtil.save(StoreKey.currentUserId, newUser.id);
+
     });
     super.onInit();
   }
   void setToken(String newToken){
     token.value = newToken;
+  }
+  void setUser(User? newUser){
+    user.value = newUser!;
   }
 
   Future<void> loginByPhone({
@@ -48,11 +59,15 @@ class AppController extends GetxController{
     );
     await  LoadingUtil.closeLoading();
     if(response.code == 0){
-      AlertUtil.showSuccessAlert(title: "登录成功",content:"欢迎使用");
-      await StoreUtil.save(StoreKey.token,response.data["data"]["token"]);
+      User user = User.fromJson(response.data["data"]);
+      setToken(user.token??"");
+      setUser(user);
+      //登录成功，保存该用户信息到内存
+      await StoreUtil.updateUser(user);
       await RouterUtil.redirectPath(path: RoutePath.home);
     }
     if(response.code == 1){
+      print("res:$response");
       AlertUtil.showErrorAlert(title: "登录失败",content: response.data["message"]);
     }
     print("请求结果：$response");

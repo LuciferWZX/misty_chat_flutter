@@ -7,7 +7,7 @@ import 'package:misty_chat/routes/index.dart';
 import 'package:misty_chat/utils/global.util.dart';
 
 class MyApp extends StatelessWidget {
-  const   MyApp({super.key});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override

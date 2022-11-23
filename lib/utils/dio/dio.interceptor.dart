@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:misty_chat/utils/alert.util.dart';
 import 'package:misty_chat/utils/device.util.dart';
+import 'package:misty_chat/utils/loading.util.dart';
 
 import 'dio_response.dart';
 
@@ -43,6 +45,12 @@ class DioInterceptors extends Interceptor {
 
   @override
   Future<dynamic> onError(DioError err, ErrorInterceptorHandler handler)async {
+    print("xxxxaaa:${err.type}");
+    // if(err.response == null){
+    //   Response res =  Response(requestOptions: err.requestOptions);
+    //   res.data = DioResponse(code: 1, message: "请求失败啦", data: response.data)
+    //   handler.resolve(response);
+    // }
     switch(err.type) {
     // 连接服务器超时
       case DioErrorType.connectTimeout:
@@ -83,7 +91,10 @@ class DioInterceptors extends Interceptor {
     // other 其他错误类型
       case DioErrorType.other:
         {
-
+          if(err.response == null){
+            await  LoadingUtil.closeLoading();
+            AlertUtil.showErrorAlert(title: "出错了",content: "连接服务器出现问题。");
+          }
         }
         break;
 

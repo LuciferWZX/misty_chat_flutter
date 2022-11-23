@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:misty_chat/controllers/app.controller.dart';
+import 'package:misty_chat/entities/user.dart';
 import 'package:misty_chat/utils/color.util.dart';
 import 'package:misty_chat/utils/loading.util.dart';
 import 'package:misty_chat/widgets/list_item/index.dart';
@@ -19,9 +20,11 @@ class MePage extends StatefulWidget {
 
 class _MePageState extends State<MePage> {
   final appController = Get.find<AppController>();
+
   @override
   Widget build(BuildContext context) {
     Color iconColor = ColorsUtil.hexStringColor("#1B72C0");
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -97,9 +100,10 @@ class _MePageState extends State<MePage> {
     );
   }
   Widget buildUserInfo(){
-    String src = "https://img2.baidu.com/it/u=3650686799,1942032122&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1668790800&t=2c279653d74e825ccda477205f73f7d7";
-    String title="Daniel";
-    String desc ="+14844578842";
+    User user = appController.user.value;
+    String src = user.avatar ?? "";
+    String title=user.username ?? "";
+    String desc ="+${user.phone}";
     return(
         ListItem(
           imgSrc: src,
