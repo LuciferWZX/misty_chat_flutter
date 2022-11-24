@@ -57,6 +57,7 @@ dependencies:
   device_info_plus: ^8.0.0
   awesome_snackbar_content: ^0.1.0
   socket_io_client: ^2.0.0
+  lpinyin: ^2.0.3
 
 dev_dependencies:
   flutter_test:

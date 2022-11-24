@@ -96,7 +96,6 @@ class DioInterceptors extends Interceptor {
     // other 其他错误类型
       case DioErrorType.other:
         {
-          print("xxxx:$err");
           if(err.response == null){
             await  LoadingUtil.closeLoading();
             AlertUtil.showErrorAlert(title: "出错了",content: "连接服务器出现问题。");
