@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:misty_chat/controllers/socket.controller.dart';
 import 'package:misty_chat/entities/user.dart';
 import 'package:misty_chat/routes/index.dart';
 import 'package:misty_chat/utils/alert.util.dart';
@@ -11,15 +12,18 @@ import 'package:misty_chat/utils/router.util.dart';
 import 'package:misty_chat/utils/store.util.dart';
 import 'package:misty_chat/utils/store_key.dart';
 
+
 class AppController extends GetxController{
   RxString token = "".obs;
   Rx<User> user = User().obs;
+
   @override
   void onInit(){
     /// 监听token的改变
     ever(token, (newToken){
       debugPrint("新token:$newToken");
       if(newToken == ""){
+        Get.find<SocketController>().disConnected();
         StoreUtil.save(StoreKey.token, null);
         StoreUtil.save(StoreKey.currentUserId, null);
         LoadingUtil.closeLoading();
@@ -41,13 +45,12 @@ class AppController extends GetxController{
   void setUser(User? newUser){
     user.value = newUser!;
   }
-
   Future<void> loginByPhone({
     required String phone,
     required String pin
   })async{
     const url = "/user/login_with_phone";
-    // DioUtil.getInstance()?.openLog();
+    DioUtil.getInstance()?.openLog();
     await LoadingUtil.showLoading(title: "登录中...");
     DioResponse response = await DioUtil().request(
       url,

@@ -9,12 +9,12 @@ class DioInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // 对非open的接口的请求参数全部增加userId
-    if (!options.path.contains("open")) {
-      options.queryParameters["userId"] = "xxx";
-    }
+    // if (!options.path.contains("open")) {
+    //   options.queryParameters["userId"] = "xxx";
+    // }
 
     // 头部添加token
-    options.headers["token"] = "xxx";
+    // options.headers["token"] = "xxx";
     String device =DeviceUtil.getDevicePlatform();
     options.headers["user-agent"] = device;
 
@@ -45,7 +45,7 @@ class DioInterceptors extends Interceptor {
 
   @override
   Future<dynamic> onError(DioError err, ErrorInterceptorHandler handler)async {
-    print("xxxxaaa:${err.type}");
+    print("xxxxaaa:${err.error}");
     // if(err.response == null){
     //   Response res =  Response(requestOptions: err.requestOptions);
     //   res.data = DioResponse(code: 1, message: "请求失败啦", data: response.data)
@@ -56,24 +56,29 @@ class DioInterceptors extends Interceptor {
       case DioErrorType.connectTimeout:
         {
           // 根据自己的业务需求来设定该如何操作,可以是弹出框提示/或者做一些路由跳转处理
+          await  LoadingUtil.closeLoading();
+          AlertUtil.showErrorAlert(title: "连接超时",content: "连接服务器出现问题。");
         }
         break;
     // 响应超时
       case DioErrorType.receiveTimeout:
         {
           // 根据自己的业务需求来设定该如何操作,可以是弹出框提示/或者做一些路由跳转处理
+          await  LoadingUtil.closeLoading();
         }
         break;
     // 发送超时
       case DioErrorType.sendTimeout:
         {
           // 根据自己的业务需求来设定该如何操作,可以是弹出框提示/或者做一些路由跳转处理
+          await  LoadingUtil.closeLoading();
         }
         break;
     // 请求取消
       case DioErrorType.cancel:
         {
           // 根据自己的业务需求来设定该如何操作,可以是弹出框提示/或者做一些路由跳转处理
+          await  LoadingUtil.closeLoading();
         }
         break;
     // 404/503错误
@@ -91,6 +96,7 @@ class DioInterceptors extends Interceptor {
     // other 其他错误类型
       case DioErrorType.other:
         {
+          print("xxxx:$err");
           if(err.response == null){
             await  LoadingUtil.closeLoading();
             AlertUtil.showErrorAlert(title: "出错了",content: "连接服务器出现问题。");

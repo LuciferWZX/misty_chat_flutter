@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:misty_chat/bindings/app.binding.dart';
 import 'package:misty_chat/middleware/router_auth.middleware.dart';
 import 'package:misty_chat/pages/address_book/index.dart';
 import 'package:misty_chat/pages/find/index.dart';
@@ -13,6 +14,7 @@ class Routes {
     GetPage(
         name: RoutePath.home,
         page: ()=>const HomePage(),
+        bindings:[UserControllerBinding()],
         middlewares: [
           RouterAuthMiddleware(priority: 0)
         ]

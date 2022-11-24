@@ -78,7 +78,6 @@ class _MePageState extends State<MePage> {
                   prefix: Icon(Icons.help_outline_rounded,color: iconColor),
                   title: "关于",
                 ),
-                const SizedBox(height: 100),
                 buildLogoutBtn()
               ],
             )
@@ -177,7 +176,7 @@ class _MePageState extends State<MePage> {
     context.showFlashDialog(
         constraints: const BoxConstraints(maxWidth: 300),
         persistent: persistent,
-        transitionDuration: const Duration(seconds: 1),
+        // transitionDuration: const Duration(seconds: 1),
         title: const Text('你确定要退出吗?'),
         content: const Text('退出后不会删除任何历史数据，下次登录依然可以使用本账号。'),
         negativeActionBuilder: (context, controller, _) {
