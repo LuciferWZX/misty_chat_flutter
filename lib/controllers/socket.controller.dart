@@ -36,7 +36,7 @@ class SocketController extends GetxController{
     socket.onDisconnect((_) {
       debugPrint("socket已断开连接");
     });
-    socket.on("message1", (data) => debugPrint(data));
+    socket.on("message", (data) => debugPrint(data));
     socket.connect();
     socket.emit("name","我是${user.nickname}来自fulutter");
   }
