@@ -9,6 +9,7 @@ class ListItem extends StatefulWidget {
   final String imgSrc;
   final String title;
   final String desc;
+  final GestureTapCallback? onTap;
   final Widget? action;
   const ListItem({
     Key? key ,
@@ -16,7 +17,7 @@ class ListItem extends StatefulWidget {
     this.title = "",
     this.desc = "",
     this.action,
-    required this.imgSrc
+    required this.imgSrc, this.onTap
   }) : super(key: key);
 
   @override
@@ -26,10 +27,14 @@ class ListItem extends StatefulWidget {
 class _ListItemState extends State<ListItem> {
   @override
   Widget build(BuildContext context) {
+    Widget finalWidget = buildListItem();
     if(widget.slidable){
-      return buildSlidable();
+      finalWidget = buildSlidable();
     }
-    return buildListItem();
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: finalWidget,
+    );
   }
   Widget buildListItem(){
     return Container(

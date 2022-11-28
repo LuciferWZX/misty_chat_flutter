@@ -60,10 +60,11 @@ class ContactItem extends StatelessWidget {
   final String? preStr;
   final String? imageText;
   final String? imageSrc;
+  final bool noPreStr;
   final String? name;
   const ContactItem({
     Key? key,
-    this.preStr, this.imageText, this.imageSrc, this.name
+    this.preStr, this.imageText, this.imageSrc, this.name, this.noPreStr=false
   }) : super(key: key);
   //final String src = "https://img2.baidu.com/it/u=3650686799,1942032122&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1668790800&t=2c279653d74e825ccda477205f73f7d7";
   @override
@@ -73,7 +74,7 @@ class ContactItem extends StatelessWidget {
       child: Flex(
         direction: Axis.horizontal,
         children: [
-          SizedBox(
+          noPreStr?SizedBox(
             width: 12,
             child: Text(
               preStr != null?"$preStr":"",
@@ -83,7 +84,7 @@ class ContactItem extends StatelessWidget {
                   fontSize: 16
               ),
             ),
-          ),
+          ):Container(),
           const SizedBox(width: 16),
           GFAvatar(
             backgroundImage:imageSrc!=null?NetworkImage("$imageSrc"):null,
