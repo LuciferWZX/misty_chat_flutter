@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:misty_chat/utils/alert.util.dart';
 import 'package:misty_chat/utils/device.util.dart';
 import 'package:misty_chat/utils/loading.util.dart';
+import 'package:misty_chat/utils/store.util.dart';
+import 'package:misty_chat/utils/store_key.dart';
 
 import 'dio_response.dart';
 
@@ -17,7 +19,10 @@ class DioInterceptors extends Interceptor {
     // options.headers["token"] = "xxx";
     String device =DeviceUtil.getDevicePlatform();
     options.headers["user-agent"] = device;
-
+    String? token = StoreUtil.get(StoreKey.token);
+    if(token!=null){
+      options.headers["authorization"] = "Bearer $token";
+    }
     // 更多业务需求
 
     handler.next(options);

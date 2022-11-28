@@ -50,7 +50,7 @@ class AppController extends GetxController{
     required String pin
   })async{
     const url = "/user/login_with_phone";
-    DioUtil.getInstance()?.openLog();
+    // DioUtil.getInstance()?.openLog();
     await LoadingUtil.showLoading(title: "登录中...");
     DioResponse response = await DioUtil().request(
       url,

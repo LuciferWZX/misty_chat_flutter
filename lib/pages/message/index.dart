@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:misty_chat/controllers/app.controller.dart';
-import 'package:misty_chat/pages/message/search_input.dart';
 import 'package:misty_chat/utils/color.util.dart';
+import 'package:misty_chat/widgets/list_item/index.dart';
+import 'package:misty_chat/widgets/search_input/index.dart';
 
-import '../../widgets/list_item/index.dart';
+
 
 class MessagePage extends StatefulWidget {
   const MessagePage({Key? key}) : super(key: key);

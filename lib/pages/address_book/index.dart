@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:misty_chat/entities/contact_user.dart';
 import 'package:misty_chat/pages/address_book/contact.dart';
-import 'package:misty_chat/pages/message/search_input.dart';
+import 'package:misty_chat/routes/index.dart';
+
 import 'package:misty_chat/utils/color.util.dart';
+import 'package:misty_chat/widgets/search_input/index.dart';
 
 class AddressBookPage extends StatefulWidget {
   const AddressBookPage({Key? key}) : super(key: key);
@@ -12,8 +15,23 @@ class AddressBookPage extends StatefulWidget {
 }
 
 class _AddressBookPageState extends State<AddressBookPage> {
+  final FocusNode focusNode = FocusNode();
+  @override
+  void initState() {
+    focusNode.unfocus();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    focusNode.dispose();
+  }
   @override
   Widget build(BuildContext context) {
+
     ContactUser user1 = ContactUser(
         id: "55a5e776-2a49-433e-b6a3-43cdd6b8ecb2",
         email: "admin2@qq.com",
@@ -81,9 +99,14 @@ class _AddressBookPageState extends State<AddressBookPage> {
       backgroundColor: ColorsUtil.hexStringColor("#FCFCFF"),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 16,top: 10,right: 16,bottom: 10),
-            child: SearchInput(),
+          Padding(
+            padding: const EdgeInsets.only(left: 16,top: 10,right: 16,bottom: 10),
+            child: SearchInput(
+              enabled: false,
+              onTap: (){
+                Get.toNamed(RoutePath.searchUser);
+              },
+            ),
           ),
           Expanded(
               child: Contact(
