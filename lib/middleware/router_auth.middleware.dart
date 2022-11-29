@@ -21,6 +21,7 @@ class RouterAuthMiddleware extends GetMiddleware {
     if(token!=null){
       ///将token保存到state中
       Get.find<AppController>().setToken(token);
+
       dynamic currentUser = users[currentUserId];
       if(currentUser!=null){
         //将当前的用户存入state中

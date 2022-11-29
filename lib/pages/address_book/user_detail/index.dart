@@ -18,7 +18,9 @@ class UserDetailPage extends StatelessWidget {
         backgroundColor: ColorsUtil.hexStringColor("#FCFCFF"),
         elevation: 0,
         leading: IconButton(
-            onPressed: (){},
+            onPressed: (){
+              Get.back();
+            },
             color: Colors.black,
             icon: const Icon(Icons.arrow_back_rounded)
         ),

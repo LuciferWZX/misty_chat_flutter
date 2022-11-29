@@ -32,9 +32,7 @@ class AppController extends GetxController{
       }
     });
     ever(user, (User newUser)async{
-
       await StoreUtil.save(StoreKey.currentUserId, newUser.id);
-
     });
     super.onInit();
   }
@@ -73,5 +71,18 @@ class AppController extends GetxController{
       AlertUtil.showErrorAlert(title: "登录失败",content: response.data["message"]);
     }
     print("请求结果：$response");
+  }
+
+  ///检查token是否可用
+  Future<bool> checkToken()async{
+    const url = "/user/check_token";
+    DioResponse response = await DioUtil().request(
+        url,
+        method:DioMethod.get,
+    );
+    if(response.code == 0){
+      return true;
+    }
+    return false;
   }
 }

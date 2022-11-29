@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:misty_chat/pages/address_book/request_friend/form_item.dart';
 import 'package:misty_chat/utils/color.util.dart';
 
@@ -20,7 +21,9 @@ class RequestFriendPage extends StatelessWidget {
         backgroundColor: ColorsUtil.hexStringColor("#fafafa"),
         elevation: 0,
         leading: IconButton(
-            onPressed: (){},
+            onPressed: (){
+              Get.back();
+            },
             color: Colors.black,
             icon: const Icon(Icons.keyboard_arrow_left)
         ),
