@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:misty_chat/controllers/app.controller.dart';
+import 'package:misty_chat/controllers/user.controller.dart';
 import 'package:misty_chat/pages/address_book/request_friend/form_item.dart';
 import 'package:misty_chat/utils/color.util.dart';
 
 class RequestFriendPage extends StatelessWidget {
-  const RequestFriendPage({Key? key}) : super(key: key);
+  RequestFriendPage({Key? key}) : super(key: key);
+  UserController userController = Get.find<UserController>();
+  AppController appController = Get.find<AppController>();
+  String? senderDesc="";
+  String? senderRemark="";
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,39 +51,91 @@ class RequestFriendPage extends StatelessWidget {
           top: 10,
           bottom: 10
         ),
-        child: ListView(
-          children: [
-            // 多行文本输入框
-            FormItem(
-              label: "发送添加朋友申请",
-              child:Container(
-                padding: const EdgeInsets.only(
-                  left: 15,
-                  right: 15
-                ),
-                decoration: BoxDecoration(
-                  color: ColorsUtil.hexStringColor("#f0f0f0"),
-                  borderRadius: const BorderRadius.all(Radius.circular(5))
-                ),
-                child: TextField(
-                    keyboardType: TextInputType.multiline,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(50)
-                    ],
-                    maxLines: 3,
-                    decoration:const InputDecoration(
-                      // isCollapsed: true,
-                      // contentPadding: EdgeInsets.only( left: 20,right: 20),
-                        hintText: "请输入多行文本",
-                        border: InputBorder.none
-                    )
-                ),
-              )
-            ),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              // 多行文本输入框
+              FormItem(
+                  label: "发送添加朋友申请",
+                  child:Container(
+                    padding: const EdgeInsets.only(
+                        left: 15,
+                        right: 15
+                    ),
+                    decoration: BoxDecoration(
+                        color: ColorsUtil.hexStringColor("#f0f0f0"),
+                        borderRadius: const BorderRadius.all(Radius.circular(5))
+                    ),
+                    child: TextFormField(
+                        keyboardType: TextInputType.multiline,
+                        initialValue: "我是${appController.user.value.nickname}",
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(50)
+                        ],
+                        onSaved: (val){
+                          senderDesc=val!;
+                        },
+                        maxLines: 3,
+                        decoration:const InputDecoration(
+                          // isCollapsed: true,
+                          // contentPadding: EdgeInsets.only( left: 20,right: 20),
+                            border: InputBorder.none
+                        )
+                    ),
+                  )
+              ),
+              const SizedBox(height: 8),
+              FormItem(
+                  label: "设置备注",
+                  child:Container(
+                    padding: const EdgeInsets.only(
+                        left: 15,
+                        right: 15
+                    ),
+                    decoration: BoxDecoration(
+                        color: ColorsUtil.hexStringColor("#f0f0f0"),
+                        borderRadius: const BorderRadius.all(Radius.circular(5))
+                    ),
+                    child: TextFormField(
+                      initialValue: userController.user.value.nickname,
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(20)
+                        ],
+                        decoration:const InputDecoration(
+                          // isCollapsed: true,
+                          // contentPadding: EdgeInsets.only( left: 20,right: 20),
+                            hintText: "备注",
+                            border: InputBorder.none
+                        ),
+                      onSaved: (val){
+                        senderRemark=val;
+                      },
+                    ),
+                  )
+              ),
 
-          ],
+            ],
+          ),
         ),
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(left: 10,right: 10),
+        child: SizedBox(
+          width: 200,
+          child: ElevatedButton(
+
+            onPressed: () {
+              _formKey.currentState?.save();
+              print("senderDesc:$senderDesc");
+              print("senderRemark:$senderRemark");
+              userController.sendFriendRequest(userController.user.value.id!,senderDesc, senderRemark);
+            },
+            child: Text("发送"),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

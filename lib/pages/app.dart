@@ -21,9 +21,11 @@ class MyApp extends StatelessWidget {
         final theme = Theme.of(context);
         final isThemeDark = theme.brightness == Brightness.dark;
         var child = _!;
+        // final navigatorKey = child.key as GlobalKey<NavigatorState>;
         child = FlutterEasyLoading(
           child: child,
         );
+        child = Toast(navigatorKey: Global.navigatorKey, child: child);
         child = FlashTheme(
           flashBarTheme: isThemeDark
               ? const FlashBarThemeData.dark()

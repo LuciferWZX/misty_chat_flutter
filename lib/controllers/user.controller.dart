@@ -5,6 +5,7 @@ import 'package:misty_chat/utils/dio/dio.method.dart';
 import 'package:misty_chat/utils/dio/dio.util.dart';
 import 'package:misty_chat/utils/dio/dio_response.dart';
 import 'package:misty_chat/utils/loading.util.dart';
+import 'package:misty_chat/utils/toast.util.dart';
 
 class UserController extends GetxController {
   Rx<User> user = User().obs;
@@ -25,11 +26,31 @@ class UserController extends GetxController {
       user.value = userDetail;
     }
     if(response.code == 1){
-      print("res:$response");
       Get.snackbar("请求失败", "${response.data["message"]}");
-          // .showErrorAlert(title: "登录失败",content: response.data["message"]);
     }
 
 
+  }
+
+  Future<void> sendFriendRequest(String fid, String? senderDesc,String? senderRemark)async{
+    const url = "/friend/send_request";
+    await LoadingUtil.showLoading();
+    DioResponse response = await DioUtil().request(
+        url,
+        method:DioMethod.post,
+        data: {
+          "fid":fid,
+          "senderDesc":senderDesc,
+          "senderRemark":senderRemark
+        }
+    );
+    await  LoadingUtil.closeLoading();
+    if(response.code == 0){
+      ToastUtil.showToast(content: '发送成功');
+    }
+    if(response.code == 1){
+      print("1111:${response.data["message"]}");
+      ToastUtil.showToast(content: "${response.data["message"]}");
+    }
   }
 }

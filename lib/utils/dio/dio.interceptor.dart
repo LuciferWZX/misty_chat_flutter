@@ -62,7 +62,7 @@ class DioInterceptors extends Interceptor {
         {
           // 根据自己的业务需求来设定该如何操作,可以是弹出框提示/或者做一些路由跳转处理
           await  LoadingUtil.closeLoading();
-          AlertUtil.showErrorAlert(title: "连接超时",content: "连接服务器出现问题。");
+          AlertUtil.showErrorToast(text: "连接超时" );
         }
         break;
     // 响应超时
@@ -103,7 +103,7 @@ class DioInterceptors extends Interceptor {
         {
           if(err.response == null){
             await  LoadingUtil.closeLoading();
-            AlertUtil.showErrorAlert(title: "出错了",content: "连接服务器出现问题。");
+            AlertUtil.showErrorToast(text: "连接服务器出现问题。" );
           }
         }
         break;

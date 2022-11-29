@@ -68,7 +68,7 @@ class AppController extends GetxController{
     }
     if(response.code == 1){
       print("res:$response");
-      AlertUtil.showErrorAlert(title: "登录失败",content: response.data["message"]);
+      AlertUtil.showErrorToast(text: response.data["message"] );
     }
     print("请求结果：$response");
   }

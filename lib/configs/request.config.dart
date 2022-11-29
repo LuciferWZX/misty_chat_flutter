@@ -5,7 +5,8 @@ class RequestConfig {
   static const int receiveTimeout = 6*1000;
   /// 请求的URL前缀
   // static const String baseURL = "http://192.168.163.140:3000/api";
-  static const String baseIP = "10.86.8.243";
+  // static const String baseIP = "10.86.8.243";
+  static const String baseIP = "192.168.163.140";
   static const String baseURL = "http://$baseIP:3000/api";
   // static const String socketURL = "ws://192.168.163.140:3000/";
   static const String socketURL = "ws://$baseIP:3000/";
