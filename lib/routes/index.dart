@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
 import 'package:misty_chat/bindings/app.binding.dart';
 import 'package:misty_chat/bindings/contact.binding.dart';
+import 'package:misty_chat/bindings/user.binding.dart';
 import 'package:misty_chat/middleware/router_auth.middleware.dart';
 import 'package:misty_chat/pages/address_book/index.dart';
+import 'package:misty_chat/pages/address_book/request_friend/index.dart';
 import 'package:misty_chat/pages/address_book/search_user/index.dart';
+import 'package:misty_chat/pages/address_book/user_detail/index.dart';
 import 'package:misty_chat/pages/find/index.dart';
 import 'package:misty_chat/pages/home/index.dart';
 import 'package:misty_chat/pages/login/index.dart';
@@ -16,7 +19,7 @@ class Routes {
     GetPage(
         name: RoutePath.home,
         page: ()=>const HomePage(),
-        bindings:[UserControllerBinding()],
+        bindings:[AppControllerBinding(),UserControllerBinding()],
         middlewares: [
           RouterAuthMiddleware(priority: 0)
         ]
@@ -30,7 +33,9 @@ class Routes {
     GetPage(name: RoutePath.searchUser, page: ()=>SearchUserPage()),
     GetPage(name: RoutePath.find, page: ()=>const FindPage()),
     GetPage(name: RoutePath.me, page: ()=>MePage()),
-    GetPage(name: RoutePath.login, page: ()=>const LoginPage())
+    GetPage(name: RoutePath.login, page: ()=>const LoginPage()),
+    GetPage(name: RoutePath.userDetail, page: ()=>UserDetailPage()),
+    GetPage(name: RoutePath.requestFriend, page: ()=>RequestFriendPage())
   ];
 }
 class RoutePath {
@@ -38,6 +43,8 @@ class RoutePath {
   static const String message = "/message";//消息
   static const String addressBook = "/address_book";//通讯录
   static const String searchUser = "/address_book/search_user";//查找用户搜索页
+  static const String requestFriend = "/address_book/request_friend";//好友申请页面
+  static const String userDetail = "/user_detail";//用户详情
   static const String find = "/find";//发现
   static const String me = "/me";//我
   static const String login = "/login";//登录

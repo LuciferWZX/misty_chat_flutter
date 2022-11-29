@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:misty_chat/controllers/contact.controller.dart';
+import 'package:misty_chat/controllers/user.controller.dart';
 import 'package:misty_chat/entities/user.dart';
 import 'package:misty_chat/pages/address_book/contact.dart';
+import 'package:misty_chat/routes/index.dart';
 import 'package:misty_chat/utils/color.util.dart';
 import 'package:misty_chat/widgets/list_item/index.dart';
 import 'package:misty_chat/widgets/normal_list_item/index.dart';
@@ -11,6 +13,7 @@ import 'package:misty_chat/widgets/search_input/index.dart';
 class SearchUserPage extends StatelessWidget {
   SearchUserPage({Key? key}) : super(key: key);
   ContactController contactController = Get.put(ContactController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +32,9 @@ class SearchUserPage extends StatelessWidget {
         itemBuilder: (BuildContext context,int index){
           User user = contactController.userList[index];
           return  ListItem(
-            onTap: (){
-              debugPrint("点击了:${user.id}");
+            onTap: ()async{
+              await Get.put(UserController()).getUserDetails(user.id!);
+              Get.toNamed(RoutePath.userDetail);
             },
             imgSrc: user.avatar ?? "",
             title: user.nickname ?? "",

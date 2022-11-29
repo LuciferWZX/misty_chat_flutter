@@ -33,7 +33,10 @@ class _ListItemState extends State<ListItem> {
     }
     return GestureDetector(
       onTap: widget.onTap,
-      child: finalWidget,
+      child: Container(
+        color: Colors.white,
+        child: finalWidget,
+      ),
     );
   }
   Widget buildListItem(){

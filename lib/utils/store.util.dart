@@ -26,7 +26,6 @@ class StoreUtil {
   static Future<void> updateUser(User newUser,) async{
     GetStorage storage = GetStorage();
     Map<String,dynamic> userMap =storage.read(StoreKey.users)??{};
-    debugPrint("userMap:${userMap.toString()}");
     userMap[newUser.id!] = newUser.toJson();
     await storage.write(StoreKey.users,userMap);
   }

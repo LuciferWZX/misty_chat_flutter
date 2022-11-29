@@ -21,7 +21,6 @@ class AppController extends GetxController{
   void onInit(){
     /// 监听token的改变
     ever(token, (newToken){
-      debugPrint("新token:$newToken");
       if(newToken == ""){
         Get.find<SocketController>().disConnected();
         StoreUtil.save(StoreKey.token, null);

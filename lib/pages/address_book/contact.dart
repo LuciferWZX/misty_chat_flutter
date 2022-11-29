@@ -12,7 +12,7 @@ class Contact extends StatelessWidget {
 
     List<ContactUser> finalList = contactList;
     finalList.sort((a,b)=>getFirstCharacter(a.nickname).compareTo(getFirstCharacter(b.nickname)));
-    print("xxxxx:${finalList}");
+
     return ListView.builder(
       itemExtent: 56,
       itemCount: contactList.length,
@@ -70,7 +70,7 @@ class ContactItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(top: 8,bottom: 8,left: 16,right: 16),
+      padding: EdgeInsets.only(top: 8,bottom: 8,left: 16,right: 16),
       child: Flex(
         direction: Axis.horizontal,
         children: [
