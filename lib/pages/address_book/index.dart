@@ -5,6 +5,7 @@ import 'package:misty_chat/pages/address_book/contact.dart';
 import 'package:misty_chat/routes/index.dart';
 
 import 'package:misty_chat/utils/color.util.dart';
+import 'package:misty_chat/widgets/normal_list_item/index.dart';
 import 'package:misty_chat/widgets/search_input/index.dart';
 
 class AddressBookPage extends StatefulWidget {
@@ -108,9 +109,26 @@ class _AddressBookPageState extends State<AddressBookPage> {
               },
             ),
           ),
+          NormalListItem(
+            onTap: (){
+              Get.toNamed(RoutePath.newFriend);
+            },
+            prefix:Container(
+              height: 40,
+              width: 40,
+              decoration: const BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.all(Radius.circular(6))
+              ),
+              child:const Center(
+                child: const Icon(Icons.group_add,color: Colors.white,),
+              ),
+            ),
+            title: "好友请求",
+          ),
           Expanded(
               child: Contact(
-                contactList: [user1,user2,user3,user4],
+                contactList: [user1,user2,user3,user4,user1,user2,user3,user4,user1,user2,user3,user4],
               )
           )
         ],

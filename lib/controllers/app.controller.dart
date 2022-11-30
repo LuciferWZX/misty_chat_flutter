@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:misty_chat/controllers/socket.controller.dart';
+import 'package:misty_chat/entities/friend_request.dart';
 import 'package:misty_chat/entities/user.dart';
 import 'package:misty_chat/routes/index.dart';
 import 'package:misty_chat/utils/alert.util.dart';
@@ -14,8 +15,9 @@ import 'package:misty_chat/utils/store_key.dart';
 
 
 class AppController extends GetxController{
-  RxString token = "".obs;
-  Rx<User> user = User().obs;
+  RxString token = "".obs;///当前用户的token
+  Rx<User> user = User().obs;///当前的登录用户
+
 
   @override
   void onInit(){

@@ -2,9 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:misty_chat/utils/alert.util.dart';
 import 'package:misty_chat/utils/device.util.dart';
 import 'package:misty_chat/utils/loading.util.dart';
+import 'package:misty_chat/utils/router.util.dart';
 import 'package:misty_chat/utils/store.util.dart';
 import 'package:misty_chat/utils/store_key.dart';
-
+import 'package:misty_chat/routes/index.dart';
 import 'dio_response.dart';
 
 class DioInterceptors extends Interceptor {
@@ -30,6 +31,7 @@ class DioInterceptors extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
+
     // 请求成功是对数据做基本处理
     if (response.statusCode == 200) {
       response.data = DioResponse(code: 0, message: "请求成功啦", data: response.data);
@@ -50,7 +52,8 @@ class DioInterceptors extends Interceptor {
 
   @override
   Future<dynamic> onError(DioError err, ErrorInterceptorHandler handler)async {
-    print("xxxxaaa:${err.error}");
+    print("xxxxaaa:${err.response?.statusCode}");
+
     // if(err.response == null){
     //   Response res =  Response(requestOptions: err.requestOptions);
     //   res.data = DioResponse(code: 1, message: "请求失败啦", data: response.data)
@@ -92,6 +95,13 @@ class DioInterceptors extends Interceptor {
           final response = err.response;
           if(response != null){
             response.data = DioResponse(code: 1, message: "请求失败啦", data: response.data);
+            print("后端返回的：${response.data}");
+
+            switch(err.response?.statusCode){
+              case 401:{
+                RouterUtil.redirectPath(path: RoutePath.login);
+              }
+            }
             handler.resolve(response);
           }
 

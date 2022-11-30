@@ -32,7 +32,7 @@ class UserController extends GetxController {
 
   }
 
-  Future<void> sendFriendRequest(String fid, String? senderDesc,String? senderRemark)async{
+  Future<bool> sendFriendRequest(String fid, String? senderDesc,String? senderRemark)async{
     const url = "/friend/send_request";
     await LoadingUtil.showLoading();
     DioResponse response = await DioUtil().request(
@@ -47,10 +47,11 @@ class UserController extends GetxController {
     await  LoadingUtil.closeLoading();
     if(response.code == 0){
       ToastUtil.showToast(content: '发送成功');
+      return true;
     }
     if(response.code == 1){
-      print("1111:${response.data["message"]}");
       ToastUtil.showToast(content: "${response.data["message"]}");
     }
+    return true;
   }
 }

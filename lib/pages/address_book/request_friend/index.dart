@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:misty_chat/controllers/app.controller.dart';
 import 'package:misty_chat/controllers/user.controller.dart';
 import 'package:misty_chat/pages/address_book/request_friend/form_item.dart';
+import 'package:misty_chat/routes/index.dart';
 import 'package:misty_chat/utils/color.util.dart';
+import 'package:misty_chat/utils/router.util.dart';
 
 class RequestFriendPage extends StatelessWidget {
   RequestFriendPage({Key? key}) : super(key: key);
@@ -125,11 +126,12 @@ class RequestFriendPage extends StatelessWidget {
           width: 200,
           child: ElevatedButton(
 
-            onPressed: () {
+            onPressed: ()async {
               _formKey.currentState?.save();
-              print("senderDesc:$senderDesc");
-              print("senderRemark:$senderRemark");
-              userController.sendFriendRequest(userController.user.value.id!,senderDesc, senderRemark);
+              bool res = await userController.sendFriendRequest(userController.user.value.id!,senderDesc, senderRemark);
+              if(res){
+                RouterUtil.goBackPath(path: RoutePath.addressBook);
+              }
             },
             child: Text("发送"),
           ),
