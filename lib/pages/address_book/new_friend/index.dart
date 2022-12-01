@@ -53,15 +53,62 @@ class _NewFriendPageState extends State<NewFriendPage> {
           if(friendInfo.id == friendRequest.receiverId){
             desc = "我：$desc";
           }
+          Widget action = Text(getRecordStatus(friendRequest.responseStatus));
+          if(friendRequest.senderId == friendInfo.id && friendRequest.responseStatus == 2){
+            ///说明我是接收人
+            action = Column(
+              children: [
+                ElevatedButton(
+                    onPressed: (){
+                      // contactController.handleFriendRequest(friendRequest.id, friendInfo.id, 1);
+                      contactController.handleFriendRequest(
+                          fRecordId: friendRequest.id,
+                          fid:  friendInfo.id,
+                          status: 1,
+                          senderRemark: friendRequest.senderDesc
+                      );
+                    },
+                    child: const Text("接受")
+                ),
+                TextButton(
+                    onPressed: (){
+                      // contactController.handleFriendRequest(friendRequest.id, friendInfo.id, 1);
+                      contactController.handleFriendRequest(
+                          fRecordId: friendRequest.id,
+                          fid:  friendInfo.id,
+                          status: 0,
+                      );
+                    },
+                    child: const Text("拒绝",style: TextStyle(color: Colors.red),)
+                ),
+              ],
+            );
+          }
           return FriendListItem(
             nickname: friendInfo.nickname,
             username: friendInfo.username,
             avatar: friendInfo.avatar,
             desc: desc,
             showDivider: index<contactController.friendRequestList.length,
+            action: action,
           );
         },
       )),
     );
+  }
+
+  String getRecordStatus(int responseStatus){
+    String status = "等待对方接受";
+    switch (responseStatus){
+      case  0:{
+        status = "以拒绝";
+        break;
+      }
+      case 1:{
+        status = "已接受";
+        break;
+      }
+    }
+    return status;
   }
 }

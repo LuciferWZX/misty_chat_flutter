@@ -1,5 +1,7 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:misty_chat/controllers/app.controller.dart';
 import 'package:misty_chat/pages/address_book/index.dart';
 import 'package:misty_chat/pages/find/index.dart';
 import 'package:misty_chat/pages/me/index.dart';
@@ -13,18 +15,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var currentIndex = 0;
+  AppController appController = Get.find<AppController>();
   List<Widget> pages = [
     const MessagePage(),
     const AddressBookPage(),
     const FindPage(),
-    MePage()
+    const MePage()
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[currentIndex],
+      body: pages[appController.homeIndex.value],
       bottomNavigationBar: ConvexAppBar(
         style: TabStyle.flip,
         items: const [
@@ -34,9 +36,9 @@ class _HomePageState extends State<HomePage> {
           TabItem(icon: Icons.message, title: '我'),
         ],
         onTap: (int i){
-          if(i!= currentIndex){
+          if(i!= appController.homeIndex.value){
             setState(() {
-              currentIndex = i;
+              appController.homeIndex.value = i;
             });
           }
         },

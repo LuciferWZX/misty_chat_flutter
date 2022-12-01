@@ -7,13 +7,15 @@ class FriendListItem extends StatelessWidget {
   final String desc;
   final String username;
   final bool showDivider;
+  final Widget? action;
   const FriendListItem({
     Key? key,
     required this.avatar,
     required this.nickname,
     required this.desc,
     required this.username,
-    this.showDivider=false
+    this.showDivider=false,
+    this.action
   }) : super(key: key);
 
   @override
@@ -22,11 +24,12 @@ class FriendListItem extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(10),
+          color: Colors.white,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GFAvatar(
-                  size: 30,
+                  size: 50,
                   backgroundImage:NetworkImage(avatar),
                   shape: GFAvatarShape.standard
               ),
@@ -42,19 +45,20 @@ class FriendListItem extends StatelessWidget {
                         Text(
                             nickname,
                             style: TextStyle(
-                                fontWeight: FontWeight.w600
+                                fontWeight: FontWeight.w600,
+                              fontSize: 18
                             )
                         ),
                         Text(
                             "账号：$username",
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 14,
                             )
                         ),
                         Text(
                             desc,
                             style: TextStyle(
-                                fontSize: 12,
+                                fontSize: 14,
                                 color: Colors.grey
                             )
                         ),
@@ -62,9 +66,7 @@ class FriendListItem extends StatelessWidget {
                     ),
                   )
               ),
-              Container(
-                child: Text("action"),
-              )
+              action ?? Container()
             ],
           ),
         )

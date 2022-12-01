@@ -52,6 +52,6 @@ class UserController extends GetxController {
     if(response.code == 1){
       ToastUtil.showToast(content: "${response.data["message"]}");
     }
-    return true;
+    return false;
   }
 }

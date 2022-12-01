@@ -192,7 +192,7 @@ class _MePageState extends State<MePage> {
               onPressed: () async{
                 controller.dismiss();
                 await LoadingUtil.showLoading();
-                appController.setToken("");
+                appController.logout();
               },
               child: const Text('退出登录',style: TextStyle(color: Colors.red),));
         });

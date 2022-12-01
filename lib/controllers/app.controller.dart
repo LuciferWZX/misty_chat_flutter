@@ -17,7 +17,7 @@ import 'package:misty_chat/utils/store_key.dart';
 class AppController extends GetxController{
   RxString token = "".obs;///当前用户的token
   Rx<User> user = User().obs;///当前的登录用户
-
+  RxInt homeIndex = 0.obs;
 
   @override
   void onInit(){
@@ -43,6 +43,13 @@ class AppController extends GetxController{
   }
   void setUser(User? newUser){
     user.value = newUser!;
+  }
+  setHomeIndex(int index){
+    homeIndex.value = index;
+  }
+  logout(){
+    setToken("");
+    homeIndex.value = 0;
   }
   Future<void> loginByPhone({
     required String phone,
