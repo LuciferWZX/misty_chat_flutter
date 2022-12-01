@@ -70,7 +70,7 @@ class ContactController extends GetxController{
       friendRequestList.value = res.map((e) => FriendRequest.fromJson(e)).toList();
     }
   }
-
+  ///接受、拒绝添加好友
   Future<void> handleFriendRequest({required String fRecordId, required String fid, required int status, String? senderRemark})async{
     await LoadingUtil.showLoading();
     const url = "/friend/handle_friend_request";
@@ -85,8 +85,6 @@ class ContactController extends GetxController{
           "senderRemark": senderRemark
         }
     );
-
-    print("response:$response");
     if(response.code == 0){
       await getFriendRequestList();
       String resMsg = "接受成功";
@@ -98,6 +96,25 @@ class ContactController extends GetxController{
     if(response.code == 1){
       await  LoadingUtil.closeLoading();
       ToastUtil.showToast(content: "${response.data["message"]}");
+    }
+  }
+  ///获取好友列表
+  Future<void> getFriendsList({String? query})async{
+    await LoadingUtil.showLoading();
+    const url = "/friend/get_friends_list";
+    // DioUtil.getInstance()?.openLog();
+    DioResponse response = await DioUtil().request(
+      url,
+      method:DioMethod.post,
+      data: {
+        "query":query
+      }
+    );
+    await  LoadingUtil.closeLoading();
+    print("res:$response");
+    if(response.code == 0){
+      // List<dynamic> res = response.data['data'];
+      // friendRequestList.value = res.map((e) => FriendRequest.fromJson(e)).toList();
     }
   }
 }

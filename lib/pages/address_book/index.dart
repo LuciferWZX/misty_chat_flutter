@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:misty_chat/controllers/contact.controller.dart';
 import 'package:misty_chat/entities/contact_user.dart';
 import 'package:misty_chat/pages/address_book/contact.dart';
 import 'package:misty_chat/routes/index.dart';
@@ -17,8 +18,10 @@ class AddressBookPage extends StatefulWidget {
 
 class _AddressBookPageState extends State<AddressBookPage> {
   final FocusNode focusNode = FocusNode();
+  final ContactController contactController = Get.find<ContactController>();
   @override
   void initState() {
+    contactController.getFriendsList();
     focusNode.unfocus();
     // TODO: implement initState
     super.initState();
