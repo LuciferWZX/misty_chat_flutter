@@ -3,6 +3,7 @@ import 'package:misty_chat/bindings/app.binding.dart';
 import 'package:misty_chat/bindings/contact.binding.dart';
 import 'package:misty_chat/bindings/user.binding.dart';
 import 'package:misty_chat/middleware/router_auth.middleware.dart';
+import 'package:misty_chat/pages/address_book/friend_detail/index.dart';
 import 'package:misty_chat/pages/address_book/index.dart';
 import 'package:misty_chat/pages/address_book/new_friend/index.dart';
 import 'package:misty_chat/pages/address_book/request_friend/index.dart';
@@ -39,6 +40,7 @@ class Routes {
     GetPage(name: RoutePath.me, page: ()=>MePage()),
     GetPage(name: RoutePath.login, page: ()=>const LoginPage()),
     GetPage(name: RoutePath.userDetail, page: ()=>UserDetailPage()),
+    GetPage(name: RoutePath.friendDetail, page: ()=>FriendDetailPage()),
     GetPage(name: RoutePath.requestFriend, page: ()=>RequestFriendPage()),
     GetPage(name: RoutePath.newFriend, page: ()=>NewFriendPage())
   ];
@@ -51,6 +53,7 @@ class RoutePath {
   static const String searchUser = "/address_book/search_user";//查找用户搜索页
   static const String requestFriend = "/address_book/request_friend";//好友申请页面
   static const String userDetail = "/user_detail";//用户详情
+  static const String friendDetail = "/friend_detail";//用户详情
   static const String find = "/find";//发现
   static const String me = "/me";//我
   static const String login = "/login";//登录

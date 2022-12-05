@@ -16,6 +16,8 @@ class ContactController extends GetxController{
   RxString query = "".obs;
   ///好友列表
   RxList<ContactUser> friendsList =RxList<ContactUser>.empty();
+  ///当前的好友信息
+  Rx<ContactUser> friend = ContactUser().obs;
   TextEditingController textController = TextEditingController();
   ///好友的请求列表
   RxList<FriendRequest> friendRequestList = List<FriendRequest>.empty().obs;
@@ -39,7 +41,9 @@ class ContactController extends GetxController{
     textController.dispose();
     super.dispose();
   }
-
+  setFriend(ContactUser newFriend){
+    friend.value = newFriend;
+  }
   ///查询用户
   Future<void> searchUsers({String? query})async {
     const url = "/friend/search_users";
@@ -118,7 +122,7 @@ class ContactController extends GetxController{
       List<dynamic> res = response.data['data'];
       friendsList.value = res.map((e){
         ContactUser cUser = ContactUser.fromJson(e['friendInfo']);
-        cUser.senderRemark = e['senderRemark'];
+        cUser.remark =cUser.id == e["senderId"]?e['receiverRemark']:e['senderRemark'];
         return cUser;
       }).toList();
     }

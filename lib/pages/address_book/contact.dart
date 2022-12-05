@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:misty_chat/controllers/contact.controller.dart';
 import 'package:misty_chat/entities/contact_user.dart';
 import 'package:misty_chat/routes/index.dart';
 import 'package:misty_chat/utils/color.util.dart';
@@ -12,24 +13,27 @@ class Contact extends StatelessWidget {
   Widget build(BuildContext context) {
 
     List<ContactUser> finalList = contactList;
-    finalList.sort((a,b)=>getFirstCharacter(a.nickname).compareTo(getFirstCharacter(b.nickname)));
+    finalList.sort((a,b)=>getFirstCharacter(a.nickname!).compareTo(getFirstCharacter(b.nickname!)));
 
     return ListView.builder(
       itemExtent: 56,
       itemCount: contactList.length,
       itemBuilder: (BuildContext context, int index) {
         ContactUser curUser = finalList[index];
-        String preStr = getFirstCharacter(curUser.nickname);
+        String preStr = getFirstCharacter(curUser.nickname!);
 
-        if(index>0 && preStr==getFirstCharacter(finalList[index-1].nickname)){
+        if(index>0 && preStr==getFirstCharacter(finalList[index-1].nickname!)){
           preStr="";
         }
-
         return ContactItem(
           preStr: preStr,
           imageSrc: curUser.avatar,
           imageText: curUser.nickname,
-          name:curUser.senderRemark ?? curUser.nickname,
+          onTap: ()async{
+            await Get.find<ContactController>().setFriend(curUser);
+            await Get.toNamed(RoutePath.friendDetail);
+          },
+          name:curUser.remark ?? curUser.nickname,
         );
       },
       // children: contactList.map((contactUser) =>
@@ -40,7 +44,7 @@ class Contact extends StatelessWidget {
   Map<String,List<ContactUser>> formatData(List<ContactUser> tempList){
     Map<String,List<ContactUser>> formatMap = {};
     for(int i=0;i<tempList.length;i++){
-      String? first = getFirstCharacter(tempList[i].nickname);
+      String? first = getFirstCharacter(tempList[i].nickname!);
       if(first!=null){
         List<ContactUser>? list = formatMap[first];
         if(list!=null){
@@ -64,10 +68,11 @@ class ContactItem extends StatelessWidget {
   final String? imageText;
   final String? imageSrc;
   final bool noPreStr;
+  final GestureTapCallback? onTap;
   final String? name;
   const ContactItem({
     Key? key,
-    this.preStr, this.imageText, this.imageSrc, this.name, this.noPreStr=false
+    this.preStr, this.imageText, this.imageSrc, this.name, this.noPreStr=false, this.onTap
   }) : super(key: key);
   //final String src = "https://img2.baidu.com/it/u=3650686799,1942032122&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1668790800&t=2c279653d74e825ccda477205f73f7d7";
   @override
@@ -75,10 +80,7 @@ class ContactItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8,bottom: 8,left: 16,right: 16),
       child: InkWell(
-        onTap: (){
-          Get.find();
-          Get.toNamed(RoutePath.userDetail);
-        },
+        onTap: onTap,
         child: Flex(
           direction: Axis.horizontal,
           children: [

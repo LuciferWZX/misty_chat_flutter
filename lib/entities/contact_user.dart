@@ -10,35 +10,35 @@ String contactToJson(ContactUser data) => json.encode(data.toJson());
 
 class ContactUser {
   ContactUser({
-    required this.id,
-    required this.email,
-    required this.avatar,
-    required this.phone,
-    required this.nickname,
-    this.senderRemark,
-    required this.username,
-    required this.authority,
-    required this.sex,
-    required this.banned,
+    this.id,
+    this.email,
+    this.avatar,
+    this.phone,
+    this.nickname,
+    this.remark,
+    this.username,
+    this.authority,
+    this.sex,
+    this.banned,
   });
 
-  String id;
-  String email;
-  String avatar;
-  String phone;
-  String nickname;
-  String? senderRemark;
-  String username;
-  int authority;
-  int sex;
-  bool banned;
+  String? id;
+  String? email;
+  String? avatar;
+  String? phone;
+  String? nickname;
+  String? remark;
+  String? username;
+  int? authority;
+  int? sex;
+  bool? banned;
 
   factory ContactUser.fromJson(Map<String, dynamic> json) => ContactUser(
     id: json["id"],
     email: json["email"],
     phone: json["phone"],
     nickname: json["nickname"],
-    senderRemark: json["senderRemark"],
+    remark: json["remark"],
     username: json["username"],
     authority: json["authority"],
     sex: json["sex"],
@@ -50,7 +50,7 @@ class ContactUser {
     "id": id,
     "email": email,
     "phone": phone,
-    "senderRemark": senderRemark,
+    "remark": remark,
     "nickname": nickname,
     "username": username,
     "authority": authority,
