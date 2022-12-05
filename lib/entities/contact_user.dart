@@ -15,6 +15,7 @@ class ContactUser {
     required this.avatar,
     required this.phone,
     required this.nickname,
+    this.senderRemark,
     required this.username,
     required this.authority,
     required this.sex,
@@ -26,6 +27,7 @@ class ContactUser {
   String avatar;
   String phone;
   String nickname;
+  String? senderRemark;
   String username;
   int authority;
   int sex;
@@ -36,6 +38,7 @@ class ContactUser {
     email: json["email"],
     phone: json["phone"],
     nickname: json["nickname"],
+    senderRemark: json["senderRemark"],
     username: json["username"],
     authority: json["authority"],
     sex: json["sex"],
@@ -47,6 +50,7 @@ class ContactUser {
     "id": id,
     "email": email,
     "phone": phone,
+    "senderRemark": senderRemark,
     "nickname": nickname,
     "username": username,
     "authority": authority,

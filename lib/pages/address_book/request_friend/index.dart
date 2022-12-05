@@ -129,7 +129,6 @@ class RequestFriendPage extends StatelessWidget {
             onPressed: ()async {
               _formKey.currentState?.save();
               bool res = await userController.sendFriendRequest(userController.user.value.id!,senderDesc, senderRemark);
-              print("111:$res");
               if(res){
                 RouterUtil.goBackPath(path: RoutePath.home);
               }

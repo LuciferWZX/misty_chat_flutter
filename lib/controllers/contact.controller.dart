@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:misty_chat/entities/contact_user.dart';
 import 'package:misty_chat/entities/friend_request.dart';
 import 'package:misty_chat/entities/user.dart';
 import 'package:misty_chat/utils/dio/dio.method.dart';
@@ -13,6 +14,8 @@ class ContactController extends GetxController{
   RxList<User> userList = RxList<User>.empty();
   ///用户搜索的关键字
   RxString query = "".obs;
+  ///好友列表
+  RxList<ContactUser> friendsList =RxList<ContactUser>.empty();
   TextEditingController textController = TextEditingController();
   ///好友的请求列表
   RxList<FriendRequest> friendRequestList = List<FriendRequest>.empty().obs;
@@ -111,10 +114,13 @@ class ContactController extends GetxController{
       }
     );
     await  LoadingUtil.closeLoading();
-    print("res:$response");
     if(response.code == 0){
-      // List<dynamic> res = response.data['data'];
-      // friendRequestList.value = res.map((e) => FriendRequest.fromJson(e)).toList();
+      List<dynamic> res = response.data['data'];
+      friendsList.value = res.map((e){
+        ContactUser cUser = ContactUser.fromJson(e['friendInfo']);
+        cUser.senderRemark = e['senderRemark'];
+        return cUser;
+      }).toList();
     }
   }
 }

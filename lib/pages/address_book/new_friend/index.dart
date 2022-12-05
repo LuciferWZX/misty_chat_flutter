@@ -65,7 +65,7 @@ class _NewFriendPageState extends State<NewFriendPage> {
                           fRecordId: friendRequest.id,
                           fid:  friendInfo.id,
                           status: 1,
-                          senderRemark: friendRequest.senderDesc
+                          senderRemark: friendRequest.senderRemark
                       );
                     },
                     child: const Text("接受")

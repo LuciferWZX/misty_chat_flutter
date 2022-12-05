@@ -16,6 +16,7 @@ class FriendRequest {
     required this.createdDate,
     required this.updatedDate,
     this.senderDesc,
+    this.senderRemark,
     this.denialReason,
     required this.responseStatus,
     required this.deleteStatus,
@@ -28,6 +29,7 @@ class FriendRequest {
   String createdDate;
   String updatedDate;
   String? senderDesc;
+  String? senderRemark;
   String? denialReason;
   FriendInfo? friendInfo;
   int responseStatus;
@@ -40,6 +42,7 @@ class FriendRequest {
     createdDate: json["createdDate"],
     updatedDate: json["updatedDate"],
     senderDesc: json["senderDesc"],
+    senderRemark: json["senderRemark"],
     denialReason: json["denialReason"],
     responseStatus: json["responseStatus"],
     deleteStatus: json["deleteStatus"],
@@ -53,6 +56,7 @@ class FriendRequest {
     "createdDate": createdDate,
     "updatedDate": updatedDate,
     "senderDesc": senderDesc,
+    "senderRemark": senderRemark,
     "denialReason": denialReason,
     "responseStatus": responseStatus,
     "deleteStatus": deleteStatus,

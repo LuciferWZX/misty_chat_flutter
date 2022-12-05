@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:misty_chat/entities/contact_user.dart';
+import 'package:misty_chat/routes/index.dart';
 import 'package:misty_chat/utils/color.util.dart';
 import 'package:lpinyin/lpinyin.dart';
 class Contact extends StatelessWidget {
@@ -19,14 +20,16 @@ class Contact extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         ContactUser curUser = finalList[index];
         String preStr = getFirstCharacter(curUser.nickname);
+
         if(index>0 && preStr==getFirstCharacter(finalList[index-1].nickname)){
           preStr="";
         }
+
         return ContactItem(
           preStr: preStr,
           imageSrc: curUser.avatar,
           imageText: curUser.nickname,
-          name: curUser.nickname,
+          name:curUser.senderRemark ?? curUser.nickname,
         );
       },
       // children: contactList.map((contactUser) =>
@@ -70,39 +73,45 @@ class ContactItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 8,bottom: 8,left: 16,right: 16),
-      child: Flex(
-        direction: Axis.horizontal,
-        children: [
-          noPreStr?SizedBox(
-            width: 12,
-            child: Text(
-              preStr != null?"$preStr":"",
-              style: TextStyle(
-                  color: ColorsUtil.hexStringColor("#1B72C0"),
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16
-              ),
-            ),
-          ):Container(),
-          const SizedBox(width: 16),
-          GFAvatar(
-            backgroundImage:imageSrc!=null?NetworkImage("$imageSrc"):null,
-            child: Text((imageText!=null && imageSrc=="")?"$imageText":""),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
+      padding: const EdgeInsets.only(top: 8,bottom: 8,left: 16,right: 16),
+      child: InkWell(
+        onTap: (){
+          Get.find();
+          Get.toNamed(RoutePath.userDetail);
+        },
+        child: Flex(
+          direction: Axis.horizontal,
+          children: [
+            !noPreStr?SizedBox(
+              width: 12,
               child: Text(
-            "$name",
-            style: TextStyle(
-                color: ColorsUtil.hexStringColor("#001E2F"),
-                fontWeight: FontWeight.w400,
-                fontSize: 16
+                preStr != null?"$preStr":"",
+                style: TextStyle(
+                    color: ColorsUtil.hexStringColor("#1B72C0"),
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16
+                ),
+              ),
+            ):Container(),
+            const SizedBox(width: 16),
+            GFAvatar(
+              backgroundImage:imageSrc!=null?NetworkImage("$imageSrc"):null,
+              child: Text((imageText!=null && imageSrc=="")?"$imageText":""),
             ),
-            overflow: TextOverflow.ellipsis,
-          )
-          )
-        ],
+            const SizedBox(width: 16),
+            Expanded(
+                child: Text(
+                  "$name",
+                  style: TextStyle(
+                      color: ColorsUtil.hexStringColor("#001E2F"),
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                )
+            )
+          ],
+        ),
       ),
     );
   }
